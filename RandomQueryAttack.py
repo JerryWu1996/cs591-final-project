@@ -9,11 +9,13 @@ def randQueryAttack(n, m, sigma):
     m = round(m)
     int(m)
     # Generate x
-    x = np.random.choice(a=[0, 1], size=(n, 1), p=[1/2, 1/2]) # Generate Matrix B
+    x = np.random.choice(a=[0, 1], size=(n, 1), p=[1/2, 1/2]) 
+    # Generate Matrix B
     B = np.random.randint(2, size=(m, n))
     tmp = B.dot(1 / n * x)
     # Generate Y
-    Y = np.random.uniform(low=0, high = sigma ** 2, size=(m, 1)) # Compute answer matrix a
+    Y = np.random.uniform(low=0, high = sigma ** 2, size=(m, 1)) 
+    # Compute answer matrix a
     a = tmp + Y
     # Compute matrix z
     z = np.linalg.lstsq(((1 / n) * B), a)[0]
@@ -35,7 +37,8 @@ def testAttack(n, m, sigma):
     mean = np.mean(hamList, dtype=np.float64)
     print('For n =', n, 'and sigma =', sigma, '\n')
     print('Hamming Distance for each randaom attack =', hamList, '\n') print('Mean =', mean, '\n')
-    print('Standard Deviation =', stdDeviation, ':\n') print('------------------------------', '\n')
+    print('Standard Deviation =', stdDeviation, ':\n') 
+    print('------------------------------', '\n')
     return (mean, stdDeviation)
 # n ∈ {128,512,2048,8192}
 # theta from 2 ^ -1 down to 2 ^ -4 # m ∈ {1.1n, 4n, 16n}
@@ -65,8 +68,12 @@ for k in range(5):
             mean, std = testAttack(nList[i], mList[j], sigmaList[k]) 
             meanList.append(mean)
             stdList.append(std)
-    Graph(nList, mList, sigmaList, meanList, stdList) '''
+    Graph(nList, mList, sigmaList, meanList, stdList) 
+'''
 
+'''
+Attack testing
+'''
 testAttack(128, 1.1 * 512, 1 / 16)
 testAttack(512, 4 * 512, 1 / 8)
 testAttack(512, 16 * 512, 1 / 4)
@@ -76,4 +83,7 @@ testAttack(512, 16 * 512, 1 / 8)
 testAttack(2048, 4 * 2048, 1 / 64)
 testAttack(2048, 4 * 2048, 1 / 32)
 testAttack(2048, 16 * 2048, 1 / 16)
-# for n = 8192, it takes a long time to run. #testAttack(8192, 1.1 * 2048, 1 / 64) #testAttack(8192, 4 * 2048, 1 / 32) #testAttack(8192, 16 * 2048, 1 / 16)
+# for n = 8192, it takes a long time to run. 
+#testAttack(8192, 1.1 * 2048, 1 / 64) 
+#testAttack(8192, 4 * 2048, 1 / 32) 
+#testAttack(8192, 16 * 2048, 1 / 16)
